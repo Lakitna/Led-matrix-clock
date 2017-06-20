@@ -1,9 +1,25 @@
-void drawNum (byte num, byte x, byte y, byte Size, boolean leadingZero) {
+void debugging() {
+  Serial.print(Time.h());
+  Serial.print(":");
+  Serial.print(Time.m());
+  Serial.print(":");
+  Serial.print(Time.s());
+
+  Serial.print(" \tFPS: ");
+  Serial.print(FPS.get());
+    
+  Serial.println();
+}
+
+
+
+
+void drawNum(byte num, byte x, byte y, byte size, boolean leadingZero) {
   if(num >= 10 || leadingZero == true) {
     byte numA = num/10;
     byte numB = num - (numA*10);
 
-    if(Size == 2) {
+    if(size == 2) {
       matrix.drawBitmap(x, y, bigNumArr[numA], 8, 14, 1);
       matrix.drawBitmap((x+9), y, bigNumArr[numB], 8, 14, 1);
     } else {
@@ -11,9 +27,8 @@ void drawNum (byte num, byte x, byte y, byte Size, boolean leadingZero) {
       matrix.drawBitmap((x+7), y, smallNumArr[numB], 6, 8, 1);
     }
   } else {
-    if(Size == 2) {
+    if(size == 2) {
       matrix.drawBitmap(x, y, bigNumArr[num], 8, 14, 1);
-      //matrix.drawBitmap(x, y, font[num], 8, 14, 1);
     } else {
       matrix.drawBitmap(x, y, smallNumArr[num], 6, 8, 1);
     }
@@ -21,7 +36,6 @@ void drawNum (byte num, byte x, byte y, byte Size, boolean leadingZero) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
 void drawNumPixelArr(byte num, byte x, byte y, byte Size, boolean leadingZero) {
   if(num >= 10 || leadingZero == true) {
     byte numA = num / 10;
@@ -49,7 +63,6 @@ void drawBitmapPixelArr(byte x, byte y, const uint8_t *bitmap, byte w, byte h) {
   for(byte j=0; j<h; j++) {
     for(byte i=0; i<w; i++) {
       if(pgm_read_byte(bitmap + j * byteWidth + i / 8) & (128 >> (i & 7))) {
-        //drawPixel(x+i, y+j, color);
         invertPixel(x+i, y+j);
       }
     }
@@ -75,26 +88,20 @@ void drawSquarePixelArr (byte x, byte y, byte w, byte h) {
   }
 }
 
-void invertPixel (byte x, byte y) {  
-  if (pixelArr[y][x] == 0) {
-    pixelArr[y][x] = 1;
-  } else {
-    pixelArr[y][x] = 0;
-  }
+void invertPixel (byte x, byte y) {
+  pixelArr[y][x] = !pixelArr[y][x];
 }
 
 void resetPixelArr () {
-  for(byte i=0; i < totalVertical; i++) {
-    for(byte j=0; j < totalHorizontal; j++) {
-      pixelArr[i][j] = 0;
-    }
-  }
+  memset(pixelArr, 0, totalPixels);
 }
 
 void debugPixelArr() {
   for(byte i=0; i < totalVertical; i++) {
     for(byte j=0; j < totalHorizontal; j++) {
-      Serial.print(pixelArr[i][j]);
+      if (pixelArr[i][j]) Serial.print("O");
+      else                Serial.print(" ");
+//      Serial.print(pixelArr[i][j]);
       Serial.print(" ");
     }
     Serial.println();
@@ -103,24 +110,10 @@ void debugPixelArr() {
 }
 
 void matrixUpdate() {
-  for(byte i=0; i < totalVertical; i++) {
-    for(byte j=0; j < totalHorizontal; j++) {
-      matrix.drawPixel(j, i, pixelArr[i][j]);
+  for(byte y=0; y < totalVertical; y++) {
+    for(byte x=0; x < totalHorizontal; x++) {
+      matrix.drawPixel(x, y, pixelArr[y][x]);
     }
   }
   matrix.write();
-}
-
-void scale() {
-  switch(setScale) {
-    case 0:
-      delay(1); //Wait for 1ms, debugging
-    break;
-    case 1:
-      delay(3000); //Wait for 3s, hour scale
-    break;
-    case 2:
-      delay(90); //Wait for 90ms, minute scale
-    break;
-  }
 }
