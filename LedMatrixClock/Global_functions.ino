@@ -5,7 +5,7 @@ void debugging() {
   Serial.print(":");
   Serial.print(Time.s());
 
-  Serial.print(" \tFPS: ");
+  Serial.print("   \tFPS: ");
   Serial.print(FPS.get());
     
   Serial.println();
@@ -13,52 +13,60 @@ void debugging() {
 
 
 
+void drawNumHelper(int num, byte x, byte y, byte size, boolean leadingZero, byte mode) {
+  byte n;
+  String numStr = String(num);
+  byte charCount = numStr.length();
+  
+  byte* sizes;
+  if (size == 1)
+    sizes = smallNumSizes;
+  else if (size == 2)
+    sizes = bigNumSizes;
 
-void drawNum(byte num, byte x, byte y, byte size, boolean leadingZero) {
-  if(num >= 10 || leadingZero == true) {
-    byte numA = num/10;
-    byte numB = num - (numA*10);
+  // If leading zero should be added
+  if (leadingZero && charCount == 1) {
+    numStr = "0"+numStr;
+    charCount++;
+  }
 
-    if(size == 2) {
-      matrix.drawBitmap(x, y, bigNumArr[numA], 8, 14, 1);
-      matrix.drawBitmap((x+9), y, bigNumArr[numB], 8, 14, 1);
-    } else {
-      matrix.drawBitmap(x, y, smallNumArr[numA], 6, 8, 1);
-      matrix.drawBitmap((x+7), y, smallNumArr[numB], 6, 8, 1);
+  // Normal (library) mode
+  if (mode == 0) {
+    // For every character that should be printed
+    for (byte c=0; c<charCount; c++) {
+      n = numStr.substring(c, (c+1)).toInt();
+  
+      if (size == 1)
+        matrix.drawBitmap((x+(c*(sizes[0]+sizes[2]))), y, smallNumArr[n], sizes[0], sizes[1], 1);
+      else if (size == 2)
+        matrix.drawBitmap((x+(c*(sizes[0]+sizes[2]))), y, bigNumArr[n],   sizes[0], sizes[1], 1);
     }
-  } else {
-    if(size == 2) {
-      matrix.drawBitmap(x, y, bigNumArr[num], 8, 14, 1);
-    } else {
-      matrix.drawBitmap(x, y, smallNumArr[num], 6, 8, 1);
+  }
+  // Pixelarray invert pixel mode
+  else if (mode == 1) {
+    // For every character that should be printed
+    for (byte c=0; c<charCount; c++) {
+      n = numStr.substring(c, (c+1)).toInt();
+  
+      if (size == 1)
+        drawBitmapPixelArr((x+(c*(sizes[0]+sizes[2]))), y, smallNumArr[n], sizes[0], sizes[1]);
+      else if (size == 2)
+        drawBitmapPixelArr((x+(c*(sizes[0]+sizes[2]))), y, bigNumArr[n],   sizes[0], sizes[1]);
     }
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-void drawNumPixelArr(byte num, byte x, byte y, byte Size, boolean leadingZero) {
-  if(num >= 10 || leadingZero == true) {
-    byte numA = num / 10;
-    byte numB = num - (numA*10);
+void drawNum(int num, byte x, byte y, byte size, boolean leadingZero) {
+  drawNumHelper(num, x, y, size, leadingZero, 0);
+}
 
-    if(Size == 2) {
-      drawBitmapPixelArr(x, y, bigNumArr[numA], 8, 14);
-      drawBitmapPixelArr((x+10), y, bigNumArr[numB], 8, 14);
-    } else {
-      drawBitmapPixelArr(x, y, smallNumArr[numA], 6, 8);
-      drawBitmapPixelArr((x+7), y, smallNumArr[numB], 6, 8);
-    }
-  } else {
-    if(Size == 2) {
-      drawBitmapPixelArr(x, y, bigNumArr[num], 8, 14);
-    } else {
-      drawBitmapPixelArr(x, y, smallNumArr[num], 6, 8);
-    }
-  }
+void drawNumPixelArr(byte num, byte x, byte y, byte size, boolean leadingZero) {
+  drawNumHelper(num, x, y, size, leadingZero, 1);
 }
 
 void drawBitmapPixelArr(byte x, byte y, const uint8_t *bitmap, byte w, byte h) {
-  int16_t byteWidth = (w + 7) / 8;
+//  int16_t byteWidth = (w + 7) / 8;
+  uint8_t byteWidth = (w + 7) / 8;
   
   for(byte j=0; j<h; j++) {
     for(byte i=0; i<w; i++) {
@@ -72,19 +80,19 @@ void drawBitmapPixelArr(byte x, byte y, const uint8_t *bitmap, byte w, byte h) {
 void drawSquarePixelArr (byte x, byte y, byte w, byte h) {
   //Horizontal top line
   for (byte i = x; i < (x + w); i++) {
-    pixelArr[y][i] = 1;
+    invertPixel(y, i);
   }
   //Horizontal bottom line
   for (byte i = x; i < (x + w); i++) {
-    pixelArr[y+h-1][i] = 1;
+    invertPixel(y+h-1, i);
   }
   //Vertical left line
-  for (byte i = y; i < (y + h); i++) {
-    pixelArr[i][x] = 1;
+  for (byte i = y+1; i < (y + h -1); i++) {
+    invertPixel(i, x);
   }
   //Vertical right line
-  for (byte i = y; i < (y + h); i++) {
-    pixelArr[i][x+w-1] = 1;
+  for (byte i = y+1; i < (y + h -1); i++) {
+    invertPixel(i, x+w-1);
   }
 }
 
@@ -101,7 +109,6 @@ void debugPixelArr() {
     for(byte j=0; j < totalHorizontal; j++) {
       if (pixelArr[i][j]) Serial.print("O");
       else                Serial.print(" ");
-//      Serial.print(pixelArr[i][j]);
       Serial.print(" ");
     }
     Serial.println();

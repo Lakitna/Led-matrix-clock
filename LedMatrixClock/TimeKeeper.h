@@ -37,13 +37,24 @@ class TimeKeeper {
       }
     }
 
-    byte h() {
+    uint8_t h() {
       return hour;
     }
-    byte m() {
+    uint8_t h(byte maxNum) {
+      uint8_t ret = hour;
+      
+      if (maxNum != 24) {
+        for (byte i=0; i<(24/maxNum); i++) {
+          if (ret > maxNum)
+            ret -= maxNum;
+        }
+      }
+      return ret;
+    }
+    uint8_t m() {
       return minute;
     }
-    byte s() {
+    uint8_t s() {
       return second;
     }
 };

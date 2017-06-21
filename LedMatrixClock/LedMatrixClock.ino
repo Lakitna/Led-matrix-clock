@@ -24,32 +24,31 @@ Max72xxPanel matrix = Max72xxPanel(CS, DISPLAY_COUNT_HORIZONTAL, DISPLAY_COUNT_V
 
 // Pixel buffer array
 boolean pixelArr[totalVertical][totalHorizontal] = {
-  {1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1},
-  {0,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,0},
-  {0,0,1,0,0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0,1,0,0},
-  {0,0,0,1,0,0,0,0,1,0,0,1,1,0,0,1,0,0,0,0,1,0,0,0},
-  {0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0},
-  {0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0},
-  {0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0},
-  {0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0},
-  {0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0},
-  {0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0},
-  {0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0},
+  {1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1},
+  {1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1},
   {0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0},
   {0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0},
-  {0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0},
-  {0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0},
-  {0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0},
-  {0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0},
-  {0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0},
-  {0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0},
-  {0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0},
-  {1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1}
+  {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1}
 };
-
 
 // define 8x14 numbers
 static const unsigned char PROGMEM bigOne[] = { 0x18, 0x38, 0x78, 0xd8, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0xff, 0xff, };
@@ -63,19 +62,21 @@ static const unsigned char PROGMEM bigEig[] = { 0x3c, 0x7e, 0xe7, 0xc3, 0xc3, 0x
 static const unsigned char PROGMEM bigNin[] = { 0x3c, 0x7e, 0xe7, 0xc3, 0xc3, 0xc3, 0xe7, 0x7f, 0x3b, 0x3,  0x3,  0x7,  0x7e, 0x3c, };
 static const unsigned char PROGMEM bigZer[] = { 0x3c, 0x7e, 0xe7, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xe7, 0x7e, 0x3c, };
 const unsigned char* bigNumArr[] = { bigZer, bigOne, bigTwo, bigThr, bigFou, bigFiv, bigSix, bigSev, bigEig, bigNin };
+const byte bigNumSizes[] = { 8, 14, 1 }; // w, h, gap
 
-// define 6x8 numbers
-static const unsigned char PROGMEM smallOne[] = { 0x10, 0x30, 0x70, 0x30, 0x30, 0x30, 0x78, 0x78, };
-static const unsigned char PROGMEM smallTwo[] = { 0x78, 0xfc, 0x8c, 0x18, 0x30, 0x60, 0xfc, 0xfc, };
-static const unsigned char PROGMEM smallThr[] = { 0x78, 0xfc, 0x8c, 0x38, 0x38, 0x8c, 0xfc, 0x78, };
-static const unsigned char PROGMEM smallFou[] = { 0x18, 0x38, 0x78, 0xd8, 0xfc, 0xfc, 0x18, 0x18, };
-static const unsigned char PROGMEM smallFiv[] = { 0xfc, 0xfc, 0xc0, 0xf8, 0xfc, 0xc,  0xfc, 0xf8, };
-static const unsigned char PROGMEM smallSix[] = { 0x78, 0xfc, 0xc0, 0xf8, 0xfc, 0xcc, 0xfc, 0x78, };
-static const unsigned char PROGMEM smallSev[] = { 0xfc, 0xfc, 0x8,  0x18, 0x18, 0x18, 0x18, 0x18, };
-static const unsigned char PROGMEM smallEig[] = { 0x78, 0xfc, 0xcc, 0xfc, 0xfc, 0xcc, 0xfc, 0x78, };
-static const unsigned char PROGMEM smallNin[] = { 0x78, 0xfc, 0xcc, 0xfc, 0x7c, 0xc,  0xfc, 0x78, };
-static const unsigned char PROGMEM smallZer[] = { 0x78, 0xfc, 0xcc, 0xcc, 0xcc, 0xcc, 0xfc, 0x78, };
+// define 5x8 numbers
+static const unsigned char PROGMEM smallOne[] = { 0x20 ,0x60 ,0x20 ,0x20 ,0x20 ,0x20 ,0x20 ,0xf8 };
+static const unsigned char PROGMEM smallTwo[] = { 0x70 ,0x88 ,0x08 ,0x10 ,0x20 ,0x40 ,0x80 ,0xf8 };
+static const unsigned char PROGMEM smallThr[] = { 0x70 ,0x88 ,0x08 ,0x30 ,0x08 ,0x08 ,0x88 ,0x70 };
+static const unsigned char PROGMEM smallFou[] = { 0x10 ,0x90 ,0x90 ,0x90 ,0xf8 ,0x10 ,0x10 ,0x10 };
+static const unsigned char PROGMEM smallFiv[] = { 0xf8 ,0x80 ,0x80 ,0xf0 ,0x08 ,0x08 ,0x88 ,0x70 };
+static const unsigned char PROGMEM smallSix[] = { 0x70 ,0x88 ,0x80 ,0xf0 ,0x88 ,0x88 ,0x88 ,0x70 };
+static const unsigned char PROGMEM smallSev[] = { 0xf8 ,0x08 ,0x10 ,0x10 ,0x20 ,0x20 ,0x20 ,0x20 };
+static const unsigned char PROGMEM smallEig[] = { 0x70 ,0x88 ,0x88 ,0x70 ,0x88 ,0x88 ,0x88 ,0x70 };
+static const unsigned char PROGMEM smallNin[] = { 0x70 ,0x88 ,0x88 ,0x88 ,0x78 ,0x08 ,0x88 ,0x70 };
+static const unsigned char PROGMEM smallZer[] = { 0x70, 0x88, 0x88, 0x88, 0x88, 0x88, 0x88, 0x70 };
 const unsigned char* smallNumArr[] = { smallZer, smallOne, smallTwo, smallThr, smallFou, smallFiv, smallSix, smallSev, smallEig, smallNin };
+const byte smallNumSizes[] = { 5, 8, 1 }; // w, h, gap
 
 void setup() {
   Serial.begin(115200);
@@ -112,7 +113,7 @@ void setup() {
   // Initialize matrix
   matrixUpdate();
 
-  delay(1000); // Show splash screen
+  delay(1500); // Show splash screen
 }
 
 void loop() {
@@ -126,11 +127,9 @@ void loop() {
 //    barsClock( Time );
     
 
-    debugPixelArr(); // Dump pixel array in Serial monitor
+//    debugPixelArr(); // Dump pixel array in Serial monitor
     debugging(); // Debug vals in Serial monitor
   }
-
-
 
   FPS.tick( Time );     // FPS counter - tick(TimeKeeper t)
   FPS.throttle( 3, 1 ); // Throttle to target FPS - throttle(uint8_t fps_cap, uint8_t variance)
