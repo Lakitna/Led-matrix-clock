@@ -80,19 +80,19 @@ void drawBitmapPixelArr(byte x, byte y, const uint8_t *bitmap, byte w, byte h) {
 void drawSquarePixelArr (byte x, byte y, byte w, byte h) {
   //Horizontal top line
   for (byte i = x; i < (x + w); i++) {
-    invertPixel(y, i);
+    matrixArr.invertPixel(y, i);
   }
   //Horizontal bottom line
   for (byte i = x; i < (x + w); i++) {
-    invertPixel(y+h-1, i);
+    matrixArr.invertPixel(y+h-1, i);
   }
   //Vertical left line
   for (byte i = y+1; i < (y + h -1); i++) {
-    invertPixel(i, x);
+    matrixArr.invertPixel(i, x);
   }
   //Vertical right line
   for (byte i = y+1; i < (y + h -1); i++) {
-    invertPixel(i, x+w-1);
+    matrixArr.invertPixel(i, x+w-1);
   }
 }
 

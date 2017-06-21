@@ -4,12 +4,14 @@
 #include "TimeKeeper.h"
 #include "fps.h"
 
-byte intensity = 0;   // Set brightness [0-15]
-
-
 #define CS 10 // Attach CS to this pin, DIN to MOSI and CLK to SCK (cf http://arduino.cc/en/Reference/SPI )
 #define DISPLAY_COUNT_HORIZONTAL 3
 #define DISPLAY_COUNT_VERTICAL   3
+
+#include "pixelArr.h"
+
+byte intensity = 0;   // Set brightness [0-15]
+
 
 
 TimeKeeper Time;
@@ -21,6 +23,7 @@ const byte totalVertical   = DISPLAY_COUNT_VERTICAL   * 8;
 const int  totalPixels     = totalHorizontal * totalVertical;
 
 Max72xxPanel matrix = Max72xxPanel(CS, DISPLAY_COUNT_HORIZONTAL, DISPLAY_COUNT_VERTICAL);
+pixelArr matrixArr(24, 24);
 
 // Pixel buffer array
 boolean pixelArr[totalVertical][totalHorizontal] = {
@@ -122,8 +125,8 @@ void loop() {
   if (FPS.newSecond()) { // If screen should be updated
 
 //    numberClock( Time );
-    abstractClock( Time, 1 );
-//    abstractClock( Time, 2 );
+//    abstractClock( Time, 1 );
+    abstractClock( Time, 2 );
 //    barsClock( Time );
     
 

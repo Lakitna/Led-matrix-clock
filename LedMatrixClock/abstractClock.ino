@@ -22,7 +22,7 @@ void abstractClock(TimeKeeper t, byte mode) {
     break;
   }
 
-  matrixUpdate();
+  matrixArr.update();
 }
 
 //Note: percentage where max = 3600 instead of 100.00
